@@ -1,0 +1,7 @@
+{{#each flashMessages.queue as |flash|}}
+  {{#flash-message messageStyle="bootstrap" flash=flash as |component flash|}}
+    {{!-- <p>{{flash.message}}</p> --}}
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <a class="alert-link">{{flash.message}}</a>
+  {{/flash-message}}
+{{/each}}

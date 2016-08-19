@@ -1,1 +1,39 @@
+@import 'variables';
+
+@import 'ember-power-select/themes/bootstrap';
+@import 'ember-power-select';
 @import 'bower_components/bootstrap/scss/bootstrap';
+@import 'liquid-tether';
+
+[data-ember-action] {
+  cursor: pointer;
+}
+
+body {
+    overflow: hidden;
+    background-color: darken(white, 4%);
+}
+
+.flash-messages {
+    position: fixed;
+    bottom: 0;
+    left: 0.5rem;
+    right: 0.5rem;
+
+    .alert {
+        text-align: center;
+    }
+}
+
+.databases {
+    .database {
+        .actions {
+            padding: 0.25rem 0.45rem;
+
+            .logo {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+</div>
+
+<div class="modal-body">
+    {{yield}}
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-{{cancelBtnClass}}"{{action 'cancel'}}>{{cancelText}}</button>
+    <button class="btn btn-{{saveBtnClass}}"{{action 'save'}}>{{saveText}}</button>
+</div>

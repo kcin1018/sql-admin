@@ -1,0 +1,105 @@
+<div class="container-fluid databases">
+    {{#liquid-if showCreateDatabase use='fade'}}
+        <div class="row m-t-3">
+            <div class="col-xs-12 col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="form-group">
+                            <label>Database name</label>
+                            {{input type='text' value=newDb.name placeholder='Database name' class='form-control'}}
+                        </div>
+                        <div class="form-group">
+                            <label>Database type</label>
+                            {{#power-select
+                                options=dbTypes
+                                selected=newDb.type
+                                onchange=(action (mut newDb.type)) as |db|}}
+                                {{db.text}}
+                            {{/power-select}}
+                        </div>
+                        <div class="form-group">
+                            <label>Hostname</label>
+                            {{input type='text' value=newDb.host placeholder='Hostname' class='form-control'}}
+                        </div>
+                        <div class="form-group">
+                            <label>Database name</label>
+                            {{input type='text' value=newDb.database placeholder='Database name' class='form-control'}}
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            {{input type='text' value=newDb.username placeholder='Username' class='form-control'}}
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            {{input type='password' value=newDb.password placeholder='Password' class='form-control'}}
+                        </div>
+                        <div class="form-group">
+                            <label>Port</label>
+                            {{input type='text' value=newDb.port placeholder='Port' class='form-control'}}
+                        </div>
+                    </div>
+                    <div class="card-footer text-xs-center p-a-1">
+                        <button class="btn {{if media.isXsmall 'btn-block '}}btn-secondary" {{action (toggle 'showCreateDatabase' this)}}>Cancel</button>
+                        <button class="btn {{if media.isXsmall 'btn-block '}}btn-primary" {{action (route-action 'createDatabase')}}>Create Database</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <div class="row m-y-1">
+            <div class="col-xs-12 col-sm-6">
+                <h1>Databases</h1>
+            </div>
+            <div class="col-xs-12 col-sm-6 text-xs-right">
+                <button class="btn {{if media.isXsmall 'btn-block '}}btn-secondary" {{action (toggle 'showCreateDatabase' this)}}>Create Database</button>
+            </div>
+            <div class="col-xs-12">
+               {{input type='text' placeholder='Filter databases' class='form-control'}}
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            {{#each model as |database|}}
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="card database">
+                        <div class="row actions">
+                            <div class="col-xs-6"><img class="logo" src="{{rootUrl}}img/{{database.type}}.png"/></div>
+                            <div class="col-xs-6 text-xs-right"{{action (route-action 'toggleShowDeleteConfirm' database)}}>
+                                {{fa-icon 'remove' fixedWidth=true}}
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="card-title">{{database.name}}</div>
+                            <small class="text-muted">
+                                {{database.host}}<br/>
+                                {{database.username}}@{{database.database}}
+                            </small>
+                        </div>
+                        <div class="card-footer bg-info text-xs-center" {{action (route-action 'connectToDatabase' database)}}>Connect</div>
+                    </div>
+                </div>
+            {{else}}
+                <div class="col-xs-12 text-xs-center">
+                    <h1 class="text-muted text-xs-center">No Databases</h1>
+                </div>
+            {{/each}}
+        </div>
+    {{/liquid-if}}
+</div>
+
+{{#if showDeleteConfirmation}}
+    {{#liquid-tether
+        to="modal-dialog"
+        target="document.body"
+        targetModifier="visible"
+        attachment="middle center"
+        tetherClass="modal-dialog"
+        overlayClass="modal-backdrop"}}
+
+        {{#confirmation-modal title='Delete Confirmation' cancelAction=(route-action 'toggleShowDeleteConfirm') saveBtnClass='danger' saveText='Delete!' saveAction=(route-action 'deleteDatabase')}}
+            <p>Are you sure you would like to delete this?</p>
+        {{/confirmation-modal}}
+
+    {{/liquid-tether}}
+{{/if}}
+

@@ -1,0 +1,65 @@
+$modal-backdrop-bg:           rgba(36, 51, 66, 0.66);
+$modal-content-bg:            white;
+$modal-content-border-radius: 0.25rem;
+$modal-content-border-color:  darken(white, 15%);
+$modal-footer-bg:             darken(white, 5%);
+$zindex-modal-background:     1040;
+
+//
+// Modals
+// --------------------------------------------------
+
+// Background
+.modal-backdrop {
+    z-index: ($zindex-modal-background - 100);
+    background-color: $modal-backdrop-bg;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.modal-target .liquid-tether-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+// Container that the modal scrolls within
+.modal {
+    display: block;
+    margin: 0;
+    z-index: $zindex-modal-background + 10;
+}
+
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+    z-index: ($zindex-modal-background + 10000);
+    background-color: $modal-content-bg;
+    width: 80%;
+
+    @media (min-width: 544px) {
+        min-width: 544px;
+    }
+
+    .modal-content {
+        background-color: $modal-content-bg;
+        border-radius: $modal-content-border-radius;
+        overflow: auto;
+        width: auto;
+
+        .modal-header {
+            padding: 0.5rem;
+            border-bottom: 1px solid $modal-content-border-color;
+            white-space: nowrap;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            background-color: $modal-footer-bg;
+            border-top: 1px solid darken($modal-content-border-color, 5%);
+        }
+    }
+}
